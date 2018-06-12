@@ -7,6 +7,15 @@ from flask import request
 from flask import make_response
 
 # Flask app should start in global layout
+import json
+import os
+import requests
+
+from flask import Flask
+from flask import request
+from flask import make_response
+
+# Flask app should start in global layout
 app = Flask(__name__)
 
 @app.route('/webhook', methods=['POST'])
@@ -31,7 +40,7 @@ def makeResponse(req):
     date = parameters.get("date")
     if city is None:
         return None
-    r=requests.get('http://samples.openweathermap.org/data/2.5/forecast?q='+city+'DE&appid=b6907d289e10d714a6e88b30761fae22')
+    r=requests.get('http://api.openweathermap.org/data/2.5/forecast?q='+city+'&appid=06f070197b1f60e55231f8c46658d077')
     json_object = r.json()
     weather=json_object['list']
     for i in range(0,30):
@@ -49,6 +58,9 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print("Starting app on port %d" % port)
     app.run(debug=False, port=port, host='0.0.0.0')
+
+
+
 
 
 
